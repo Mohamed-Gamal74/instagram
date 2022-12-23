@@ -1,0 +1,21 @@
+
+
+.post__item {
+  background-color: var(--dark-light-color);
+  border-radius: 14px;
+  max-width: 800px;
+}
+
+
+.post__img img {
+  border-radius: 14px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  margin-bottom: 0;
+}
+
+p span {
+  font-size: 10px;
+}

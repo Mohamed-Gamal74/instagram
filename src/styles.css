@@ -1,0 +1,56 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "~swiper/css";
+@import "~swiper/css/navigation";
+@import "~swiper/css/pagination";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --dark-color: #121212;
+  --dark-light-color: #1e1e1e;
+  --white-color: #fff;
+  --white-light-color: #f9fbfc;
+  --grey-color: #c4c4c4;
+  --linear-color: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-light-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--white-light-color);
+  border-radius: 10px;
+}
+
+

@@ -1,0 +1,11 @@
+.left {
+  flex: 0.5;
+}
+
+.center {
+  flex: 1;
+}
+
+.right {
+  flex: 0.5;
+}

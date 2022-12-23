@@ -1,0 +1,70 @@
+<p [@fade] *ngIf="error" class="error bg-red-500 text-center p-4">
+  {{ error }}
+</p>
+
+<form
+  class="flex flex-col mb-5 relative"
+  (ngSubmit)="login()"
+  [formGroup]="loginForm"
+>
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input
+      type="email"
+      matInput
+      placeholder="Ex. pat@example.com"
+      formControlName="email"
+    />
+
+    <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+
+    <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+      Email is <strong>invalid</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your password</mat-label>
+    <input
+      matInput
+      [type]="hide ? 'password' : 'text'"
+      formControlName="password"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+      type="button"
+    >
+      <i *ngIf="hide" class="bi bi-eye-fill"></i>
+      <i *ngIf="!hide" class="bi bi-eye-slash-fill"></i>
+    </button>
+
+    <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+
+    <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+      Password must be at least <strong>6 characters</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <button class="w-80 mainBtn mt-5">Log In</button>
+</form>
+
+<div class="w-80 text-center">
+  <p class="line relative">OR</p>
+
+  <button (click)="googleLogin()" class="google__btn flex items-center mx-auto">
+    <img src="../../assets/images/google.png" alt="google" />
+    <span>Continue with Google</span>
+  </button>
+</div>
+
+<p class="haveAcc p-5 text-center">
+  Don't have an account? <a (click)="toggleSignup()">Sign up</a>
+</p>

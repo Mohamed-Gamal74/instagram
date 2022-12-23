@@ -1,0 +1,44 @@
+nav {
+  background-color: var(--dark-light-color);
+  border-radius: 20px;
+  padding: 20px 10px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5%;
+  z-index: 1;
+}
+
+
+a {
+  color: var(--grey-color);
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: block;
+}
+
+a svg,
+a img,
+a i {
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+a.active svg,
+a.active img,
+a:hover svg,
+a:hover img,
+a.active i,
+a:hover i {
+  opacity: 1;
+}
+
+.profile {
+  width: 30px;
+  margin-left: -2px;
+}
+
+a i {
+  font-size: 22px;
+}

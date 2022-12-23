@@ -1,0 +1,24 @@
+aside {
+  background-color: var(--dark-light-color);
+  border-radius: 14px;
+}
+
+p {
+  margin-bottom: 0;
+  color: var(--grey-color);
+  text-transform: capitalize;
+}
+
+button {
+  color: #0095f6;
+  transition: .3s;
+}
+
+button:hover {
+  color: var(--white-light-color);
+}
+
+li {
+  color: var(--grey-color);
+  font-size: 13px;
+}

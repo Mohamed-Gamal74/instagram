@@ -1,0 +1,42 @@
+<section class="flex gap-5 justify-center items-center h-screen">
+  <div class="img__container">
+    <img src="../../assets/images/phone.png" alt="phone" />
+  </div>
+  <div class="flex items-center justify-center flex-col">
+    <div class="form__container p-8">
+      <div class="logo__container mx-auto">
+        <img
+          src="../../assets/images/instagram.png"
+          class="w-100"
+          alt="instagram"
+        />
+      </div>
+
+      <div *ngIf="!signup">
+        <app-login ></app-login>
+      </div>
+
+      <div *ngIf="signup">
+        <app-signup></app-signup>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center p-2">
+  <div class="flex gap-3 justify-center mb-6">
+    <a href="#">Meta</a>
+    <a href="#">About</a>
+    <a href="#">Blog</a>
+    <a href="#">Jobs</a>
+    <a href="#">Api</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Locations</a>
+    <a href="#">Top Accounts</a>
+    <a href="#">Hashtags</a>
+    <a href="#">Contact Uploading & Non-Users</a>
+  </div>
+
+  <p>© 2022 Mohamed Gamal.</p>
+</footer>
