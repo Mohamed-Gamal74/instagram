@@ -9,3 +9,7 @@
 .right {
   flex: 0.5;
 }
+
+.instagram {
+  filter: invert(100%);
+}

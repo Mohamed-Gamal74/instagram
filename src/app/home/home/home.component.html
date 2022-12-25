@@ -1,15 +1,29 @@
-<div class="px-8 py-12 flex justify-between">
-  <div class="left" >
-    <app-sidbar></app-sidbar>
+<app-create-post *ngIf="showPostOverlay"> </app-create-post>
 
+<div class="px-8 py-5 flex justify-between">
+  <div class="left">
+    <app-sidbar></app-sidbar>
   </div>
 
-  <div class="center mr-5 " >
-    <app-story></app-story>
+  <div class="center mr-5">
+    <div class="flex items-center justify-center">
+      <img
+        src="../../../assets/images/Instagram_logo_2016.svg-removebg-preview.png"
+        alt="logo"
+        class="w-10 h-10"
+      />
+
+      <img
+        src="../../../assets/images/instagram.png"
+        alt="logo"
+        class="w-40 h-1/5 instagram "
+      />
+    </div>
+
     <app-post></app-post>
   </div>
 
-  <div class="right" >
+  <div class="right py-20">
     <app-aside></app-aside>
   </div>
 </div>

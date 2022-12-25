@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { getFirestore } from '@firebase/firestore';
+import { getDoc } from '@angular/fire/firestore';
+
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -15,11 +18,12 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
+  [x: string]: any;
   toggleSignup = new BehaviorSubject(false);
   errorMessage = new BehaviorSubject('');
   auth = new BehaviorSubject(false);
-  currentUserID = new BehaviorSubject('');
-  userDate = new BehaviorSubject({});
+  currentUserData = new BehaviorSubject({});
+  cuurentUserId = new BehaviorSubject('');
 
   constructor(
     private _Auth: Auth,
@@ -31,7 +35,14 @@ export class AuthService {
 
     this._Auth.onAuthStateChanged((user) => {
       if (user) {
-        this.currentUserID.next(user.uid);
+        this.cuurentUserId.next(user.uid);
+        const db = getFirestore();
+        const docRef = doc(db, 'users', user.uid);
+        getDoc(docRef).then((doc) => {
+          if (doc.exists()) {
+            this.currentUserData.next(doc.data());
+          }
+        });
       }
     });
   }
@@ -49,15 +60,18 @@ export class AuthService {
     await createUserWithEmailAndPassword(this._Auth, email, password)
       .then((res) => {
         setDoc(doc(this._Firestore, 'users', res.user.uid), {
-          username: username,
+          username: '@' + username,
           email: email,
           uid: res.user.uid,
           fullName: fullName,
+          profileImg: '',
+          following: [],
+          followers: [],
         });
-        this._Router.navigate(['/home']);
         this.errorMessage.next('');
         this.auth.next(true);
         window.localStorage.setItem('auth', 'true');
+        this._Router.navigate(['/home']);
       })
       .catch((err) => {
         this.errorMessage.next('Email already exists , please try again');
@@ -70,10 +84,10 @@ export class AuthService {
   async login(email: string, password: string) {
     await signInWithEmailAndPassword(this._Auth, email, password)
       .then((res) => {
-        this._Router.navigate(['/home']);
         this.errorMessage.next('');
         this.auth.next(true);
         window.localStorage.setItem('auth', 'true');
+        this._Router.navigate(['/home']);
       })
       .catch((err) => {
         this.errorMessage.next('Invalid Email or Password , please try again');
@@ -88,10 +102,13 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(this._Auth, provider).then((res) => {
       setDoc(doc(this._Firestore, 'users', res.user.uid), {
-        username: res.user.displayName,
+        username: '@' + res.user.displayName,
         email: res.user.email,
         uid: res.user.uid,
         fullName: res.user.displayName,
+        profileImg: res.user.photoURL,
+        following: [],
+        followers: [],
       });
       this.auth.next(true);
       this._Router.navigate(['/home']);
@@ -101,12 +118,9 @@ export class AuthService {
 
   async logout() {
     await signOut(this._Auth).then(() => {
-      this._Router.navigate(['/']);
       this.auth.next(false);
-      this.currentUserID.next('');
       window.localStorage.removeItem('auth');
+      this._Router.navigate(['/']);
     });
   }
-
-  getUserData() {}
 }

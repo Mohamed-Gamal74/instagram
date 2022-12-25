@@ -1,52 +1,45 @@
 <aside class="p-5 mb-5">
-  <div class="flex gap-3 items-center cursor-pointer mb-5">
+  <div
+    (click)="handleRoute()"
+    class="flex gap-3 items-center cursor-pointer mb-5"
+  >
     <img
-      src="../../../assets/images/profile.webp"
+      [src]="userData.profileImg || '../../../assets/images/profile.webp'"
+      [alt]="userData.fullName"
       class="w-10 rounded-full"
-      alt="profile"
     />
-    <p>Mohamed Gamal</p>
+
+    <div>
+      <p>{{ userData.username }}</p>
+      <p class="fullname">{{ userData.fullName }}</p>
+    </div>
   </div>
 
-  <h3 class="text-gray-300">Suggestions For You</h3>
-  <div>
-    <div class="flex justify-between items-center mb-5">
-      <div class="flex gap-3 items-center">
-        <img
-          src="../../../assets/images/profile.webp"
-          class="w-10 rounded-full"
-          alt="profile"
-        />
-        <p>Mohamed Gamal</p>
+  <div *ngIf="users.length > 0">
+    <h3 class="text-gray-300">Suggestions For You</h3>
+    <div>
+      <div
+        *ngFor="let user of users"
+        [@fade]
+        class="flex justify-between items-center mb-5"
+      >
+        <div
+          class="flex gap-3 items-center cursor-pointer"
+          [routerLink]="['/profile', user.id]"
+        >
+          <img
+            [src]="user.profileImg || '../../../assets/images/profile.webp'"
+            class="w-10 rounded-full"
+            alt="profile"
+          />
+          <div>
+            <p>{{ user.username }}</p>
+            <small class="text-gray-400"> Suggested to you </small>
+          </div>
+        </div>
+
+        <button (click)="handleFollow(user)">Follow</button>
       </div>
-
-      <button>Follow</button>
-    </div>
-
-    <div class="flex justify-between items-center mb-5">
-      <div class="flex gap-3 items-center">
-        <img
-          src="../../../assets/images/profile.webp"
-          class="w-10 rounded-full"
-          alt="profile"
-        />
-        <p>Mohamed Gamal</p>
-      </div>
-
-      <button>Follow</button>
-    </div>
-
-    <div class="flex justify-between items-center mb-5">
-      <div class="flex gap-3 items-center">
-        <img
-          src="../../../assets/images/profile.webp"
-          class="w-10 rounded-full"
-          alt="profile"
-        />
-        <p>Mohamed Gamal</p>
-      </div>
-
-      <button>Follow</button>
     </div>
   </div>
 </aside>

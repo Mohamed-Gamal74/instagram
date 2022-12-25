@@ -7,8 +7,13 @@ nav {
   transform: translateY(-50%);
   left: 5%;
   z-index: 1;
+  transition: all 0.3s ease;
 }
 
+
+nav.active {
+  left: 5px;
+}
 
 a {
   color: var(--grey-color);
@@ -36,6 +41,8 @@ a:hover i {
 
 .profile {
   width: 30px;
+  height: 30px;
+  border-radius: 50%;
   margin-left: -2px;
 }
 

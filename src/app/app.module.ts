@@ -18,6 +18,10 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SwiperModule } from 'swiper/angular';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { FirestoreModule } from '@angular/fire/firestore';
+
+
+
 
 
 
@@ -34,6 +38,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatIconModule,
     SwiperModule,
     MatSnackBarModule,
+    FirestoreModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

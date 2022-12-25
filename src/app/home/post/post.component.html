@@ -1,28 +1,101 @@
-<section class="post__container py-5 ">
-  <div class="post__item p-5 mb-5 flex gap-5 justify-between">
-    <div class="post__content">
+<section class="post__container py-5">
+  <div *ngIf="posts.length == 0">
+    <app-skeleton></app-skeleton>
+    <app-skeleton></app-skeleton>
+  </div>
+
+  <div
+    class="post__item p-5 mb-5 flex gap-5 justify-between"
+    *ngFor="let post of posts; let i = index"
+  >
+    <div class="post__content flex flex-col justify-between">
       <div class="post__content-top mb-4">
-        <div class="flex items-center gap-2">
-          <img
-            src="../../../assets/images/profile.webp"
-            alt="profile"
-            class="w-12 h-12 rounded-full"
-          />
-          <p>
-            Mohamed Gamal
-            <span class="block text-gray-300"> 1 hour ago </span>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center mb-5 gap-2">
+            <img
+              [src]="
+                post.createdBy.profileImg ||
+                '../../../assets/images/profile.webp'
+              "
+              alt="profile"
+              class="w-12 h-12 rounded-full"
+            />
+            <p class="capitalize">
+              {{ post.createdBy.fullName }}
+              <span class="block uppercase text-gray-300">
+                {{ post.createdAt }}
+              </span>
+            </p>
+          </div>
+
+          <i
+            *ngIf="post.createdBy.uid == user.uid"
+            class="bi bi-trash-fill text-lg deleteIcon cursor-pointer"
+            (click)="openDialog('0ms', '0ms')"
+          ></i>
+        </div>
+
+        <p class="caption pl-2 capitalize">
+          {{ post.caption }}
+        </p>
+      </div>
+
+      <div class="comments mt-10" *ngIf="post.comments.length > 0">
+        <div class="comment__item py-3" *ngFor="let comment of post.comments">
+          <div class="flex gap-2">
+            <img
+              [src]="
+                comment.createdBy.profileImg ||
+                '../../../assets/images/profile.webp'
+              "
+              alt="profile"
+              class="w-7 h-7 rounded-full"
+            />
+            <p>{{ comment.createdBy.username }}</p>
+          </div>
+
+          <p class="comment__text">
+            {{ comment.comment }}
           </p>
         </div>
       </div>
 
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, culpa!
-      </p>
+      <div>
+        <div class="flex items-center gap-2 py-3">
+          <img
+            [src]="user.profileImg || '../../../assets/images/profile.webp'"
+            alt="profile"
+            class="w-7 h-7 rounded-full"
+          />
+          <input
+            id="input"
+            type="text"
+            placeholder="Add a comment..."
+            class="w-full border-none focus:outline-none relative"
+            (keyup.enter)="handleComm(post, $event)"
+          />
+        </div>
 
-      <app-comments></app-comments>
+        <div class="mt-4 flex items-center gap-2">
+          <p class="text-gray-300">
+            <i class="bi bi-heart"></i> {{ post.likes.length }}Like
+          </p>
+          <p class="text-gray-300">
+            <i class="bi bi-chat"></i> {{ post.comments.length }}Comment
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="post__img">
-      <img src="../../../assets/images/my.jpg" alt="personal" class="w-96" />
+    <div class="post__img relative">
+      <img [src]="post.img" alt="personal" />
+
+      <i
+        (click)="handleLike(post)"
+        class="cursor-pointer bi bi-heart-fill text-3xl likeIcon absolute top-1/2 left-1/2"
+        [ngClass]="{
+          active: post.likes.includes(user.uid)
+        }"
+      ></i>
     </div>
   </div>
 </section>

@@ -5,8 +5,13 @@ aside {
 
 p {
   margin-bottom: 0;
-  color: var(--grey-color);
+  color: var(--white-light-color);
   text-transform: capitalize;
+}
+
+.fullname {
+  font-size: 12px;
+  color: var(--grey-color);
 }
 
 button {

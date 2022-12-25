@@ -1,0 +1,76 @@
+<app-sidbar></app-sidbar>
+
+<section class="flex items-center justify-center flex-col py-10">
+  <div class="flex items-center justify-center gap-5 mb-10">
+    <div class="imgContainer relative">
+      <img
+        [src]="
+          selectedImg ||
+          userData.profileImg ||
+          '../../../assets/images/profile.webp'
+        "
+        alt="profile"
+      />
+
+      <label *ngIf="showChangeImg">
+        <input
+          type="file"
+          class="hidden"
+          ref="{imgPickerRef}"
+          accept=".jpg , .png , .jpeg , .gif , .svg , .webp"
+          (change)="onFileSelected($event)"
+        />
+        <i
+          class="bi camera bi-camera-fill absolute right-3 bottom-3 text-xl cursor-pointer"
+        ></i>
+      </label>
+    </div>
+    <div class="ContentContainer">
+      <h2>{{ userData?.username }}</h2>
+
+      <div class="flex items-center justify-center gap-5">
+        <p class="text-gray-400">{{ posts?.length }} Posts</p>
+        <p class="text-gray-400">{{ userData?.followers?.length }} Followers</p>
+        <p class="text-gray-400">{{ userData?.following?.length }} Following</p>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <p style="margin-bottom: 0">{{ userData?.fullName }}</p>
+        <div *ngIf="!showChangeImg">
+          <button
+            *ngIf="!following"
+            class="followBtn bg-blue-500 px-3 py-2 rounded-lg"
+            (click)="followUser(userData)"
+          >
+            Follow
+          </button>
+
+          <button (click)="unFollowUser(userData)" class="bg-gray-400 px-3 py-2 rounded-lg" *ngIf="following">
+            Unfollow
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-2xl" *ngIf="posts.length == 0">No Posts Yet</p>
+
+  <div class="postsContainer" class="flex items-center gap-3">
+    <div *ngFor="let post of posts">
+      <div class="postImg relative">
+        <img [src]="post?.img" alt="post" />
+
+        <div
+          class="mt-4 flex items-center gap-2 absolute top-1/2 left-1/2 icons"
+        >
+          <p class="text-xl">
+            <i class="bi bi-heart"></i> {{ post?.likes?.length }}
+          </p>
+          <p class="text-xl">
+            <i class="bi bi-chat"></i> {{ post?.comments?.length }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
