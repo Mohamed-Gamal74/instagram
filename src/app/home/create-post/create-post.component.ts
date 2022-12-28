@@ -23,6 +23,7 @@ export class CreatePostComponent {
   selectedImg = '';
   captionValue = '';
 
+
   constructor(private _PostService: PostService) {}
 
   ngOnInit(): void {}
@@ -52,5 +53,27 @@ export class CreatePostComponent {
 
   captionHandler(event: any) {
     this.captionValue = event.target.value;
+  }
+
+  showEmojiPicker = false;
+  sets = [
+    'native',
+    'google',
+    'twitter',
+    'facebook',
+    'emojione',
+    'apple',
+    'messenger',
+  ];
+  set = 'twitter';
+  toggleEmojiPicker() {
+    console.log(this.showEmojiPicker);
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(event: any) {
+    this.captionValue = `${this.captionValue}${event.emoji.native}`;
+
+    // this.showEmojiPicker = false;
   }
 }

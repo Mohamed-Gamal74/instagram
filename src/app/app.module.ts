@@ -19,7 +19,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SwiperModule } from 'swiper/angular';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { FirestoreModule } from '@angular/fire/firestore';
-
+import { SharedModule } from './shared/shared.module';
 
 
 
@@ -30,6 +30,7 @@ import { FirestoreModule } from '@angular/fire/firestore';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { PostService } from '../../home/post.service';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-sidbar',
@@ -11,14 +12,23 @@ export class SidbarComponent {
   userId = '';
   userData: any = {};
   userImg = '';
-  showSearchValue = false;
+  slideNav = false;
+
 
   constructor(
     private _AuthService: AuthService,
-    private _PostService: PostService
+    private _PostService: PostService,
+    private _SearchService: SearchService
   ) {}
 
   ngOnInit(): void {
+
+    this._SearchService.showSearch.subscribe((data) => {
+      this.slideNav = data;
+    });
+
+
+
     this._AuthService.cuurentUserId.subscribe((data) => {
       this.userId = data;
     });
@@ -40,6 +50,6 @@ export class SidbarComponent {
   }
 
   showSearch() {
-    this.showSearchValue = !this.showSearchValue;
+    this._SearchService.showSearchBar();
   }
 }

@@ -1,16 +1,30 @@
 import { Injectable } from '@angular/core';
-import { collection, getFirestore, onSnapshot } from '@angular/fire/firestore';
+import {
+  collection,
+  getFirestore,
+  onSnapshot,
+  doc,
+  setDoc,
+} from '@angular/fire/firestore';
+import { arrayUnion } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
-  allUsers = new BehaviorSubject<any[]>([]);
   filterdUser = new BehaviorSubject<any[]>([]);
+  showSearch = new BehaviorSubject<boolean>(false);
+  allUsers = new BehaviorSubject<any[]>([]);
+  recentSearch = new BehaviorSubject<any[]>([]);
 
-  constructor() {
+  constructor(private _AuthService: AuthService) {
     this.getAllUsers();
+  }
+
+  showSearchBar() {
+    this.showSearch.next(!this.showSearch.value);
   }
 
   getAllUsers() {
@@ -35,6 +49,36 @@ export class SearchService {
           return user.username.toLowerCase().includes(value.toLowerCase());
         });
         this.filterdUser.next(filterdUser);
+      });
+    }
+  }
+
+  handleRecentSearch(user: any) {
+    let currentUserId = this._AuthService.cuurentUserId.value;
+    const db = getFirestore();
+    const userRef = doc(db, 'users', currentUserId);
+    setDoc(
+      userRef,
+      {
+        recentSearch: arrayUnion({
+          uid: user.uid,
+          username: user.username,
+          profileImg: user.profileImg,
+        }),
+      },
+
+      { merge: true }
+    );
+  }
+
+  getRecentSearch() {
+    const currentUserId = this._AuthService.cuurentUserId.value;
+    if (currentUserId) {
+      const db = getFirestore();
+      const userRef = doc(db, 'users', currentUserId);
+      onSnapshot(userRef, (snapshot) => {
+        const data = snapshot.data();
+        this.recentSearch.next(data?.['recentSearch']);
       });
     }
   }

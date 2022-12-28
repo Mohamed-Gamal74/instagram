@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth.guard';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 import { UserprofileComponent } from './userprofile/userprofile.component';
 
 const routes: Routes = [
@@ -10,7 +11,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-
+  {
+    path: 'edit',
+    component: EditprofileComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

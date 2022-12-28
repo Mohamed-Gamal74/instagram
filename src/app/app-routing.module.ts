@@ -17,10 +17,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
   },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then((m) => m.ChatModule),
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes , {useHash : true } )],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

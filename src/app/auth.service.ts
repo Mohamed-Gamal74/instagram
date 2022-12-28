@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { getFirestore } from '@firebase/firestore';
-import { getDoc } from '@angular/fire/firestore';
+import { getFirestore, onSnapshot } from '@firebase/firestore';
 
 import {
   Auth,
@@ -18,7 +17,7 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  [x: string]: any;
+  // initial values
   toggleSignup = new BehaviorSubject(false);
   errorMessage = new BehaviorSubject('');
   auth = new BehaviorSubject(false);
@@ -38,7 +37,8 @@ export class AuthService {
         this.cuurentUserId.next(user.uid);
         const db = getFirestore();
         const docRef = doc(db, 'users', user.uid);
-        getDoc(docRef).then((doc) => {
+
+        onSnapshot(docRef, (doc) => {
           if (doc.exists()) {
             this.currentUserData.next(doc.data());
           }
@@ -51,6 +51,7 @@ export class AuthService {
     this.toggleSignup.next(!this.toggleSignup.value);
   }
 
+  // sign up function with firebase and store user data to firestore collection
   async signup(
     email: string,
     fullName: string,
@@ -67,6 +68,7 @@ export class AuthService {
           profileImg: '',
           following: [],
           followers: [],
+          recentSearch: [],
         });
         this.errorMessage.next('');
         this.auth.next(true);
@@ -81,6 +83,7 @@ export class AuthService {
       });
   }
 
+  // login function using firebase authentication
   async login(email: string, password: string) {
     await signInWithEmailAndPassword(this._Auth, email, password)
       .then((res) => {
@@ -98,6 +101,7 @@ export class AuthService {
       });
   }
 
+  // continue with google function
   async googleLogin() {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(this._Auth, provider).then((res) => {
@@ -109,6 +113,7 @@ export class AuthService {
         profileImg: res.user.photoURL,
         following: [],
         followers: [],
+        recentSearch: [],
       });
       this.auth.next(true);
       this._Router.navigate(['/home']);
@@ -116,6 +121,7 @@ export class AuthService {
     });
   }
 
+  // logout and delete localstorage auth and redirect the user
   async logout() {
     await signOut(this._Auth).then(() => {
       this.auth.next(false);

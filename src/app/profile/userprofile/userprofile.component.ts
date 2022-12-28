@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import {
   getFirestore,
   collection,
@@ -18,11 +18,11 @@ import { FollowService } from 'src/app/home/follow.service';
   templateUrl: './userprofile.component.html',
   styleUrls: ['./userprofile.component.css'],
 })
-export class UserprofileComponent {
+export class UserprofileComponent implements OnInit {
   userId = '';
   userData: any = {};
   selectedImg = '';
-  posts: any = [];
+  posts: any[] = [];
   showChangeImg = false;
   following = false;
 
@@ -33,34 +33,57 @@ export class UserprofileComponent {
   ) {}
 
   ngOnInit(): void {
-    this.userId = this._ActivatedRoute.snapshot.params['id'];
-    this.getUserData();
-    this.getUserPosts();
-    this._AuthService.cuurentUserId.subscribe((data) => {
-      if (data === this.userId) {
-        this.showChangeImg = true;
-      }
+    this._ActivatedRoute.params.subscribe((data) => {
+      this.userId = data['id'];
+      this.getUserData();
+      this.isCurrentUser();
+      this.isFollowing();
     });
+  }
 
+  // check if user is the current user
+  async isCurrentUser() {
+    this._AuthService.cuurentUserId.subscribe((data) => {
+      data === this.userId
+        ? (this.showChangeImg = true)
+        : (this.showChangeImg = false);
+    });
+  }
+
+  // check if is following
+  async isFollowing() {
     this._FollowService.isFollowing(this.userId);
     this._FollowService.followed.subscribe((data) => {
       this.following = data;
     });
   }
 
+  // get user data and posts
   getUserData() {
     const db = getFirestore();
     const docRef = doc(db, 'users', this.userId);
     getDoc(docRef).then((doc) => {
       this.userData = doc.data();
     });
+
+    const q = query(
+      collection(db, 'posts'),
+      where('createdBy.uid', '==', this.userId)
+    );
+
+    onSnapshot(q, (querySnapshot) => {
+      this.posts = [];
+      querySnapshot.forEach((doc) => {
+        this.posts.push(doc.data());
+      });
+    });
   }
 
+  // change profile image for the current user
   onFileSelected(event: any) {
     const reader = new FileReader();
     reader.onload = () => {
       this.selectedImg = reader.result as string;
-
       const db = getFirestore();
       const docRef = doc(db, 'users', this.userId);
       setDoc(docRef, { profileImg: this.selectedImg }, { merge: true });
@@ -68,25 +91,13 @@ export class UserprofileComponent {
     reader.readAsDataURL(event.target.files[0]);
   }
 
-  getUserPosts() {
-    const db = getFirestore();
-    const q = query(
-      collection(db, 'posts'),
-      where('createdBy.uid', '==', this.userId)
-    );
-
-    onSnapshot(q, (querySnapshot) => {
-      querySnapshot.docChanges().forEach((change) => {
-        this.posts.push(change.doc.data());
-      });
-    });
-  }
-
-  followUser(user: any) {
+  followUser(user : any) {
     this._FollowService.followUser(user);
+    this.getUserData()
   }
 
-  unFollowUser(user: any) {
-    this._FollowService.unfollowUser(user);
+  unFollowUser(user : any) {
+    this._FollowService.unfollowUser(user );
+    this.getUserData()
   }
 }

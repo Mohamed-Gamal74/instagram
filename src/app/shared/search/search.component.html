@@ -8,14 +8,14 @@
     class="w-full h-10 bg-transparent rounded-lg px-4 py-2 focus:outline-none focus:border-transparent"
     placeholder="Search"
     (keydown)="handleSearch($event)"
-    autofocus
   />
 
-  <div class="mt-4" *ngIf="filterdUser.length == 0">
+  <div class="mt-4" *ngIf="filterdUser.length == 0 && recentSearch.length > 0">
+    <p class="text-gray-500">Recent Search</p>
     <div
       class="flex items-center gap-2 py-3 cursor-pointer user__item"
-      *ngFor="let user of allUsers"
-      [routerLink]="['/profile', user.uid]"
+      *ngFor="let user of recentSearch"
+      (click)="handleRoute(user.uid, user)"
     >
       <img
         [src]="user.profileImg || '../../../assets/images/profile.webp'"
@@ -29,7 +29,7 @@
   <div
     class="flex mt-4 items-center gap-2 py-3 cursor-pointer user__item"
     *ngIf="filterdUser.length > 0"
-    [routerLink]="['/profile', filterdUser[0].uid]"
+    (click)="handleRoute(filterdUser[0].uid, filterdUser[0])"
   >
     <img
       [src]="filterdUser[0].profileImg || '../../../assets/images/profile.webp'"

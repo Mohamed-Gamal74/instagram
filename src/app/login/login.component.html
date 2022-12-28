@@ -1,4 +1,4 @@
-<p [@fade] *ngIf="error" class="error bg-red-500 text-center p-4">
+<p [@fade] *ngIf="error" class="error bg-red-500 text-center p-4 rounded">
   {{ error }}
 </p>
 
@@ -53,18 +53,23 @@
     </mat-error>
   </mat-form-field>
 
-  <button class="w-80 mainBtn mt-5">Log In</button>
+  <button
+    class="w-80 mainBtn mt-5 rounded-lg px-4 py-2 cursor-pointer text-base"
+  >
+    Log In
+  </button>
 </form>
 
 <div class="w-80 text-center">
-  <p class="line relative">OR</p>
+  <p class="line mb-5 relative">OR</p>
 
   <button (click)="googleLogin()" class="google__btn flex items-center mx-auto">
-    <img src="../../assets/images/google.png" alt="google" />
+    <img src="../../assets/images/google.png" alt="google" class="w-5 mr-2" />
     <span>Continue with Google</span>
   </button>
 </div>
 
-<p class="haveAcc p-5 text-center">
-  Don't have an account? <a (click)="toggleSignup()">Sign up</a>
+<p class="haveAcc p-5 text-center text-sm w-full">
+  Don't have an account?
+  <a class="text-base cursor-pointer" (click)="toggleSignup()">Sign up</a>
 </p>

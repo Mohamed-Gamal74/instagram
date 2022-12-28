@@ -6,10 +6,10 @@ nav {
   top: 50%;
   transform: translateY(-50%);
   left: 5%;
-  z-index: 1;
+  z-index: 1000;
   transition: all 0.3s ease;
-}
 
+}
 
 nav.active {
   left: 5px;
@@ -48,4 +48,24 @@ a:hover i {
 
 a i {
   font-size: 22px;
+}
+
+@media screen and (max-width: 500px) {
+  /* nav {
+    bottom: 0;
+    transform: rotate(90deg);
+    left: 50%;
+    width: 100px;
+    padding: 10px;
+    background-color: red;
+    border-radius: 0;
+  }
+
+  nav li {
+    transform: rotate(-90deg);
+  }
+
+  nav.active {
+    left: 0;
+  } */
 }

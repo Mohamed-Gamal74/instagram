@@ -2,5 +2,10 @@
   background-color: var(--dark-light-color);
 
   border-radius: 14px;
+}
 
+@media screen and (max-width: 786px) {
+  .skeleton {
+    width: 320px;
+  }
 }

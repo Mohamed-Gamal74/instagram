@@ -1,11 +1,11 @@
-<section class="post__container py-5">
+<section class="post__container w-full px-5 mt-5 py-5">
   <div *ngIf="posts.length == 0">
     <app-skeleton></app-skeleton>
     <app-skeleton></app-skeleton>
   </div>
 
   <div
-    class="post__item p-5 mb-5 flex gap-5 justify-between"
+    class="post__item rounded-xl p-5 mb-5 flex gap-5 justify-between"
     *ngFor="let post of posts; let i = index"
   >
     <div class="post__content flex flex-col justify-between">
@@ -17,12 +17,13 @@
                 post.createdBy.profileImg ||
                 '../../../assets/images/profile.webp'
               "
+              [routerLink]="['/profile', post.createdBy.uid]"
               alt="profile"
-              class="w-12 h-12 rounded-full"
+              class="w-12 h-12 rounded-full cursor-pointer"
             />
             <p class="capitalize">
               {{ post.createdBy.fullName }}
-              <span class="block uppercase text-gray-300">
+              <span class="block uppercase text-gray-300 text-xs ">
                 {{ post.createdAt }}
               </span>
             </p>
@@ -31,7 +32,7 @@
           <i
             *ngIf="post.createdBy.uid == user.uid"
             class="bi bi-trash-fill text-lg deleteIcon cursor-pointer"
-            (click)="openDialog('0ms', '0ms')"
+            (click)="deleteHandler(post)"
           ></i>
         </div>
 
@@ -54,7 +55,7 @@
             <p>{{ comment.createdBy.username }}</p>
           </div>
 
-          <p class="comment__text">
+          <p class="comment__text my-2 text-xs ">
             {{ comment.comment }}
           </p>
         </div>
@@ -71,7 +72,7 @@
             id="input"
             type="text"
             placeholder="Add a comment..."
-            class="w-full border-none focus:outline-none relative"
+            class="w-full border-none focus:outline-none relative bg-transparent "
             (keyup.enter)="handleComm(post, $event)"
           />
         </div>
@@ -86,8 +87,8 @@
         </div>
       </div>
     </div>
-    <div class="post__img relative">
-      <img [src]="post.img" alt="personal" />
+    <div class="post__img h-64 relative">
+      <img [src]="post.img" alt="personal" class="w-full h-full rounded-xl"  />
 
       <i
         (click)="handleLike(post)"

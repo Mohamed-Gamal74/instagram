@@ -1,0 +1,55 @@
+<app-sidbar></app-sidbar>
+
+<section class="flex items-center justify-center h-screen">
+  <div class="wrapper p-8 h-2/3 w-2/3 shadow rounded-2xl">
+    <div class="flex items-center gap-3 justify-center">
+      <img
+        [src]="userData.profileImg || '../../../assets/images/profile.webp'"
+        [alt]="userData.fullName"
+        class="w-16 h-16 rounded-full"
+      />
+      <h2>{{ userData.username }}</h2>
+    </div>
+
+    <form
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col items-center justify-center my-5 gap-3"
+      [formGroup]="userUpdateForm"
+    >
+      <div class="flex inputContainer items-center gap-8 mb-5">
+        <label class="w-16" for="fullName"> Name</label>
+        <input
+          type="text"
+          id="fullName"
+          class="border-2 border-gray-600 focus:border-gray-300 rounded-lg p-2"
+          value="{{ userData.fullName }}"
+          formControlName="fullName"
+        />
+      </div>
+
+      <div class="flex inputContainer items-center gap-8 mb-5">
+        <label class="w-16" for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          class="border-2 border-gray-600 focus:border-gray-300 rounded-lg p-2"
+          [value]="userData.username"
+          formControlName="username"
+        />
+      </div>
+
+      <div class="flex inputContainer items-center gap-8 mb-5">
+        <label class="w-16" for="bio">Bio</label>
+        <textarea
+          id="bio"
+          class="border-2 border-gray-600 focus:border-gray-300 rounded-lg p-2"
+          [value]="(userData.bio && userData.bio) || ''"
+          placeholder="Add a bio.."
+          formControlName="bio"
+        ></textarea>
+      </div>
+
+      <button class="bg-blue-600 px-4 py-2 rounded-lg w-40">Save</button>
+    </form>
+  </div>
+</section>

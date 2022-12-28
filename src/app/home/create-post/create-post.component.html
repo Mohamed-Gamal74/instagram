@@ -1,13 +1,16 @@
-<section [@fade] class="flex items-center justify-center relative">
+<section
+  [@fade]
+  class="flex items-center justify-center absolute w-full h-screen top-0 left-0"
+>
   <button
     class="absolute top-5 right-5 bg-transparent"
     (click)="closeOverlay()"
   >
-    <i class="bi bi-x-lg"></i>
+    <i class="bi bi-x-lg text-xl font-semibold"></i>
   </button>
 
   <div
-    class="create__post flex flex-col items-center justify-evenly text-center py-2"
+    class="create__post rounded-xl flex flex-col items-center justify-evenly text-center py-2"
   >
     <h3>Create new post</h3>
 
@@ -44,25 +47,44 @@
           accept=".jpg , .png , .jpeg , .gif , .svg , .webp"
           (change)="imgChangeHandler($event)"
         />
-        <span class="cursor-pointer"> Select Form Your Computer </span>
+        <span class="cursor-pointer py-3 px-6 rounded-lg">
+          Select Form Your Computer
+        </span>
       </label>
     </div>
 
     <div *ngIf="selectedImg" class="pb-2">
       <img [src]="selectedImg" alt="image" class="w-96 h-96 mb-5 rounded" />
 
-      <div class="flex items-center justify-between">
-        <input
-          type="text"
-          class="border border-gray-300 rounded-md py-2 px-3 w-80 bg-transparent"
-          placeholder="Write a caption..."
-          [(ngModel)]="caption"
-          (keydown)="captionHandler($event)"
-        />
+      <div>
+        <div class="mb-5 relative">
+          <input
+            type="text"
+            class="border border-gray-300 rounded-md py-2 px-3 w-80 bg-transparent"
+            placeholder="Write a caption..."
+            [(ngModel)]="caption"
+            (keydown)="captionHandler($event)"
+            [value]="captionValue"
+          />
+
+          <button
+            class="bg-gray-300 p-2 rounded-sm ml-3"
+            (click)="toggleEmojiPicker()"
+          >
+            😀</button
+          ><br />
+          <emoji-mart
+            class="emoji-mart absolute"
+            set="{{ set }}"
+            *ngIf="showEmojiPicker"
+            (emojiSelect)="addEmoji($event)"
+            title="Pick your emoji…"
+          ></emoji-mart>
+        </div>
 
         <button
           (click)="createPostHandler()"
-          class="bg-blue-500 text-white rounded-md py-2 px-3"
+          class="bg-blue-500 text-white rounded-md py-2 w-full px-3"
         >
           Post
         </button>

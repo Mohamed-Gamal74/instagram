@@ -13,6 +13,7 @@ export class WelcomeComponent {
   constructor(private _AuthService: AuthService) {}
 
   ngOnInit(): void {
+    // toggle signup and login form
     this._AuthService.toggleSignup.subscribe((data) => {
       this.signup = data;
     });

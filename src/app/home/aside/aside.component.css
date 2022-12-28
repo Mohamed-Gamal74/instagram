@@ -1,6 +1,5 @@
 aside {
   background-color: var(--dark-light-color);
-  border-radius: 14px;
 }
 
 p {
@@ -16,7 +15,7 @@ p {
 
 button {
   color: #0095f6;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 button:hover {
@@ -26,4 +25,11 @@ button:hover {
 li {
   color: var(--grey-color);
   font-size: 13px;
+}
+
+@media screen and (max-width: 786px) {
+  aside,
+  .homeFooter {
+    display: none;
+  }
 }

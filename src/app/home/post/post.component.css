@@ -1,10 +1,10 @@
+
 .post__content {
   width: 400px;
 }
 
 .post__item {
   background-color: var(--dark-light-color);
-  border-radius: 14px;
   max-width: 800px;
   transition: all 0.3s ease-in-out;
 }
@@ -22,13 +22,6 @@ p {
   margin-bottom: 0;
 }
 
-p span {
-  font-size: 10px;
-}
-
-input {
-  background-color: transparent;
-}
 
 .comments {
   max-height: 200px;
@@ -41,13 +34,10 @@ input {
 
 .comment__text {
   color: var(--grey-color);
-  margin: 10px 0;
-  font-size: 12px;
 }
 
 .post__img {
   width: 400px;
-  height: 250px;
 }
 
 .post__img::after {
@@ -64,22 +54,18 @@ input {
 }
 
 .post__img img {
-  border-radius: 14px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  height: 100%;
 }
-
 
 .likeIcon {
   transition: all 0.3s ease-in-out;
   opacity: 0;
   z-index: 2;
   transform: translate(-50%, -50%);
-
 }
 
-.post__img:hover .likeIcon , .post__img:hover::after {
+.post__img:hover .likeIcon,
+.post__img:hover::after {
   opacity: 1;
 }
 
@@ -94,7 +80,7 @@ input {
 
 @keyframes like {
   0% {
-    transform: scale(1) translate(-50%, -50%) ;
+    transform: scale(1) translate(-50%, -50%);
   }
   50% {
     transform: scale(1.2) translate(-50%, -50%);
@@ -104,3 +90,21 @@ input {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .post__container {
+    padding: 0;
+  }
+
+  .post__item {
+    flex-direction: column;
+  }
+
+  .post__content {
+    order: 2;
+  }
+
+
+  .post__img {
+    width: 100%;
+  }
+}

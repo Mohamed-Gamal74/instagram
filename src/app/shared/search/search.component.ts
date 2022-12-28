@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   trigger,
   state,
@@ -7,6 +7,7 @@ import {
   animate,
 } from '@angular/animations';
 import { SearchService } from '../search.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -20,15 +21,19 @@ import { SearchService } from '../search.service';
   ],
 })
 export class SearchComponent {
-  @Input() search: boolean = false;
-  allUsers: any[] = [];
+  search: boolean = false;
+  recentSearch: any[] = [];
   filterdUser: any[] = [];
 
-  constructor(private _SearchService: SearchService) {}
+  constructor(private _SearchService: SearchService, private _Router: Router) {}
 
   ngOnInit() {
-    this._SearchService.allUsers.subscribe((data) => {
-      this.allUsers = data;
+    this._SearchService.showSearch.subscribe((data) => {
+      this.search = data;
+    });
+    this._SearchService.getRecentSearch();
+    this._SearchService.recentSearch.subscribe((data) => {
+      this.recentSearch = data;
     });
 
     this._SearchService.filterdUser.subscribe((data) => {
@@ -38,5 +43,12 @@ export class SearchComponent {
 
   handleSearch(event: any) {
     this._SearchService.handleSearch(event);
+  }
+
+  async handleRoute(id: string, user: any) {
+    this._SearchService.handleRecentSearch(user);
+    this._Router.navigate(['/profile', id]);
+    this._SearchService.showSearch.next(false);
+    this._SearchService.filterdUser.next([]);
   }
 }

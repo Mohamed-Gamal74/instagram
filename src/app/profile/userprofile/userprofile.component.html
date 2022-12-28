@@ -26,7 +26,15 @@
       </label>
     </div>
     <div class="ContentContainer">
-      <h2>{{ userData?.username }}</h2>
+      <div class="flex items-center gap-5 mb-5">
+        <h2 style="margin-bottom: 0">{{ userData?.username }}</h2>
+
+        <i
+          *ngIf="showChangeImg"
+          class="bi bi-pencil-square text-xl cursor-pointer"
+          routerLink="edit"
+        ></i>
+      </div>
 
       <div class="flex items-center justify-center gap-5">
         <p class="text-gray-400">{{ posts?.length }} Posts</p>
@@ -35,7 +43,10 @@
       </div>
 
       <div class="flex items-center gap-6">
-        <p style="margin-bottom: 0">{{ userData?.fullName }}</p>
+        <div>
+          <p style="margin-bottom: 5px;">{{ userData?.fullName }}</p>
+          <p>{{ userData?.bio }}</p>
+        </div>
         <div *ngIf="!showChangeImg">
           <button
             *ngIf="!following"
@@ -45,7 +56,11 @@
             Follow
           </button>
 
-          <button (click)="unFollowUser(userData)" class="bg-gray-400 px-3 py-2 rounded-lg" *ngIf="following">
+          <button
+            (click)="unFollowUser(userData)"
+            class="bg-gray-400 px-3 py-2 rounded-lg"
+            *ngIf="following"
+          >
             Unfollow
           </button>
         </div>
@@ -55,8 +70,8 @@
 
   <p class="text-2xl" *ngIf="posts.length == 0">No Posts Yet</p>
 
-  <div class="postsContainer" class="flex items-center gap-3">
-    <div *ngFor="let post of posts">
+  <div  class="flex w-2/3 items-center justify-center flex-wrap gap-3">
+    <div   *ngFor="let post of posts">
       <div class="postImg relative">
         <img [src]="post?.img" alt="post" />
 

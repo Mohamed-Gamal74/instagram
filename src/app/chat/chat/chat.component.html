@@ -1,0 +1,144 @@
+<app-sidbar></app-sidbar>
+
+<section class="py-10">
+  <div class="wrapper flex items-center justify-center rounded-2xl">
+    <div class="left h-full">
+      <h2 class="text-center py-5">{{ currentUserData.fullName }}</h2>
+
+      <ul class="usersList mx-5">
+        <li *ngIf="following.length === 0">
+          <p class="text-center capitalize text-gray-400">
+            You are not following anyone yet!
+          </p>
+        </li>
+
+        <li
+          class="userItem flex items-center gap-5 cursor-pointer p-3 rounded-lg"
+          *ngFor="let user of following"
+          (click)="openChat(user, $event)"
+        >
+          <img
+            [src]="
+              user.profileImg ||
+              'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+            "
+            alt="profile"
+            class="w-12 h-12 rounded-full"
+          />
+          <p class="capitalize" style="margin-bottom: 0">{{ user.username }}</p>
+        </li>
+      </ul>
+    </div>
+    <div class="right">
+      <div *ngIf="!openedChat" class="text-center">
+        <svg
+          aria-label="Direct"
+          class="_ab6- inline-block mb-5"
+          color="#fafafa"
+          fill="#fafafa"
+          height="96"
+          role="img"
+          viewBox="0 0 96 96"
+          width="96"
+        >
+          <circle
+            cx="48"
+            cy="48"
+            fill="none"
+            r="47"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          ></circle>
+          <line
+            fill="none"
+            stroke="currentColor"
+            stroke-linejoin="round"
+            stroke-width="2"
+            x1="69.286"
+            x2="41.447"
+            y1="33.21"
+            y2="48.804"
+          ></line>
+          <polygon
+            fill="none"
+            points="47.254 73.123 71.376 31.998 24.546 32.002 41.448 48.805 47.254 73.123"
+            stroke="currentColor"
+            stroke-linejoin="round"
+            stroke-width="2"
+          ></polygon>
+        </svg>
+        <p class="text-2xl font-bold">Your Messages</p>
+        <small>Send private photos and messages to a friend.</small>
+      </div>
+
+      <div
+        *ngIf="openedChat"
+        class="chatContainer flex flex-col justify-between p-5"
+      >
+        <div class="chatHeader flex items-center gap-2 py-2">
+          <img
+            [src]="
+              selectedUser?.profileImg ||
+              'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+            "
+            alt="profile"
+            class="w-10 h-10 rounded-full"
+          />
+          <p class="capitalize">Mohamed Gamal</p>
+        </div>
+
+        <div class="chatBody flex flex-col gap-5 my-5 justify-end px-5">
+          <div
+            [ngClass]="msg.sender === currentUserData.uid ? 'owner' : ''"
+            class="message flex gap-2"
+            *ngFor="let msg of chats"
+          >
+            <img
+              [src]="
+                msg.sender === currentUserData.uid
+                  ? currentUserData.profileImg ||
+                    'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+                  : selectedUser?.profileImg ||
+                    'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+              "
+              alt="profile"
+              class="w-10 h-10 rounded-full"
+            />
+
+            <p class="msgContent">{{ msg.message }}</p>
+          </div>
+        </div>
+
+        <div class="inputContainer relative w-5/6 mx-auto">
+          <input
+            type="text"
+            placeholder="Type a message"
+            class="input w-full p-2 border-0 mr-4 rounded-xl"
+            [(ngModel)]="message"
+            (keyup.enter)="sendMessage($event)"
+            (keydown)="messageTyping($event)"
+            [value]="message"
+          />
+
+          <div class="absolute emojWrapper top-0 right-0">
+            <button
+              class="bg-transparent p-2 rounded-sm ml-3"
+              (click)="toggleEmojiPicker()"
+            >
+              😀</button
+            ><br />
+            <emoji-mart
+              class="emoji-mart absolute"
+              set="{{ set }}"
+              *ngIf="showEmojiPicker"
+              (emojiSelect)="addEmoji($event)"
+              title="Pick your emoji…"
+            ></emoji-mart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

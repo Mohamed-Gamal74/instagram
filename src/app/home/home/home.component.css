@@ -13,3 +13,18 @@
 .instagram {
   filter: invert(100%);
 }
+
+@media screen and (max-width: 786px) {
+  .homeContainer {
+    padding: 10px;
+    overflow-x: hidden;
+  }
+
+  .center {
+    width: 100%;
+  }
+
+  .logos {
+    margin-bottom: 20px;
+  }
+}

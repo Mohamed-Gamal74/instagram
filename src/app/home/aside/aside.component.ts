@@ -8,14 +8,11 @@ import { trigger, transition, style, animate } from '@angular/animations';
   selector: 'app-aside',
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.css'],
-  animations : [
+  animations: [
     trigger('fade', [
-      transition('void => *', [
-        style({ opacity: 0 }),
-        animate(500)
-      ])
-    ])
-  ]
+      transition('void => *', [style({ opacity: 0 }), animate(500)]),
+    ]),
+  ],
 })
 export class AsideComponent {
   users: any = [];
@@ -30,6 +27,7 @@ export class AsideComponent {
   ngOnInit(): void {
     this._AuthService.currentUserData.subscribe((data) => {
       this.userData = data;
+      this._FollowService.getAllusers();
     });
 
     this._FollowService.allUsers.subscribe((data) => {
@@ -38,8 +36,7 @@ export class AsideComponent {
   }
 
   handleFollow(user: any) {
-    // this._FollowService.followUser(user);
-    console.log(user);
+    this._FollowService.followUser(user);
   }
 
   handleRoute() {

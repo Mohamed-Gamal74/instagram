@@ -46,15 +46,8 @@
 
 .mainBtn {
   background: #0095f6;
-  border-radius: 8px;
-  padding: 7px 16px;
-  cursor: pointer;
-  font-size: 14px;
 }
 
-.line {
-  margin-bottom: 20px;
-}
 
 .line::before {
   content: "";
@@ -85,26 +78,17 @@
 }
 
 .error {
-  border-radius: 4px;
   transition: all 0.3s ease-in-out;
 }
 
-.google__btn img {
-  width: 20px;
-  margin-right: 10px;
-}
 
 .haveAcc {
   color: var(--grey-color);
-  font-size: 12px;
   background-color: var(--dark-light-color);
-  border-radius: 10px;
-  margin-top: 20px;
-  width: 100%;
 }
 
 .haveAcc a {
   color: #0095f6;
-  font-size: 16px;
-  cursor: pointer;
 }
+
+

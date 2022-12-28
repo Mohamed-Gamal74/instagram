@@ -10,7 +10,7 @@ import {
 } from '@angular/fire/firestore';
 import { AuthService } from '../auth.service';
 import { BehaviorSubject } from 'rxjs';
-import { where } from 'firebase/firestore';
+import { arrayRemove, where } from 'firebase/firestore';
 import { Auth } from '@angular/fire/auth';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class FollowService {
   followed = new BehaviorSubject(false);
 
   constructor(private _auth: Auth, private _AuthService: AuthService) {
-    this.getAllusers();
+
   }
 
   // method to get all users from firestore then filter out the current user
@@ -72,11 +72,11 @@ export class FollowService {
     const docRef = doc(db, 'users', user.uid);
     setDoc(
       docRef,
-      { followers: arrayUnion(this._AuthService.cuurentUserId.value) },
+      { followers: arrayRemove(this._AuthService.cuurentUserId.value) },
       { merge: true }
     );
     const docRef2 = doc(db, 'users', this._AuthService.cuurentUserId.value);
-    setDoc(docRef2, { following: arrayUnion(user.uid) }, { merge: true });
+    setDoc(docRef2, { following: arrayRemove(user.uid) }, { merge: true });
     this.getAllusers();
     this.followed.next(false);
   }
