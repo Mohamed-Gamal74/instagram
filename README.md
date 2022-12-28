@@ -7,18 +7,18 @@ follow other users and chat with users that you are follow only , you can search
 Live Demo : https://insta-mg.netlify.app/
 
 # Pages
-welcome page
-sign in
-sign up
-home page 
-profile & edit profile page
-Chat page 
+- welcome page
+- sign in
+- sign up
+- home page 
+- profile & edit profile page
+- Chat page 
 
 
 # Technologies
-Angular
-Firebase
-Tailwind
+- Angular
+- Firebase
+- Tailwind
 
  
  
