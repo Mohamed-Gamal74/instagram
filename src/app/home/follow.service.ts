@@ -21,7 +21,11 @@ export class FollowService {
   followed = new BehaviorSubject(false);
 
   constructor(private _auth: Auth, private _AuthService: AuthService) {
-
+    this._AuthService.currentUserData.subscribe((data) => {
+      if (data) {
+        this.getAllusers();
+      }
+    });
   }
 
   // method to get all users from firestore then filter out the current user

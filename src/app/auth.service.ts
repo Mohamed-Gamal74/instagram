@@ -104,21 +104,24 @@ export class AuthService {
   // continue with google function
   async googleLogin() {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(this._Auth, provider).then((res) => {
-      setDoc(doc(this._Firestore, 'users', res.user.uid), {
-        username: '@' + res.user.displayName,
-        email: res.user.email,
-        uid: res.user.uid,
-        fullName: res.user.displayName,
-        profileImg: res.user.photoURL,
-        following: [],
-        followers: [],
-        recentSearch: [],
-      });
-      this.auth.next(true);
-      this._Router.navigate(['/home']);
-      window.localStorage.setItem('auth', 'true');
+    await signInWithPopup(this._Auth, provider).then((res: any) => {
+      if (res?.additionalUserInfo?.isNewUser) {
+        setDoc(doc(this._Firestore, 'users', res.user.uid), {
+          username: '@' + res.user.displayName,
+          email: res.user.email,
+          uid: res.user.uid,
+          fullName: res.user.displayName,
+          profileImg: res.user.photoURL,
+          following: [],
+          followers: [],
+          recentSearch: [],
+        });
+      }
     });
+
+    this.auth.next(true);
+    this._Router.navigate(['/home']);
+    window.localStorage.setItem('auth', 'true');
   }
 
   // logout and delete localstorage auth and redirect the user
