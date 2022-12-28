@@ -21,8 +21,9 @@
         <input
           type="text"
           id="fullName"
+
           class="border-2 border-gray-600 focus:border-gray-300 rounded-lg p-2"
-          value="{{ userData.fullName }}"
+          [placeholder]="userData.fullName || ''"
           formControlName="fullName"
         />
       </div>
@@ -33,7 +34,7 @@
           type="text"
           id="username"
           class="border-2 border-gray-600 focus:border-gray-300 rounded-lg p-2"
-          [value]="userData.username"
+          [placeholder]="userData.username || ''"
           formControlName="username"
         />
       </div>
@@ -43,8 +44,8 @@
         <textarea
           id="bio"
           class="border-2 border-gray-600 focus:border-gray-300 rounded-lg p-2"
-          [value]="(userData.bio && userData.bio) || ''"
-          placeholder="Add a bio.."
+          [placeholder]="(userData.bio && userData.bio) || 'Add a bio...'"
+
           formControlName="bio"
         ></textarea>
       </div>

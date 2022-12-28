@@ -43,7 +43,7 @@
 
       <div class="comments mt-10" *ngIf="post.comments.length > 0">
         <div class="comment__item py-3" *ngFor="let comment of post.comments">
-          <div class="flex gap-2">
+          <div class="flex gap-2 mb-1">
             <img
               [src]="
                 comment.createdBy.profileImg ||
@@ -55,9 +55,9 @@
             <p>{{ comment.createdBy.username }}</p>
           </div>
 
-          <p class="comment__text my-2 text-xs ">
+          <h4 class="comment__text px-2  capitalize text-lg ">
             {{ comment.comment }}
-          </p>
+          </h4>
         </div>
       </div>
 

@@ -28,9 +28,9 @@ export class EditprofileComponent {
   ngOnInit(): void {
     this._AuthService.currentUserData.subscribe((data) => {
       this.userData = data;
+
     });
   }
-
 
   onSubmit() {
     const db = getFirestore();
