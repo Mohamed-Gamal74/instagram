@@ -105,7 +105,6 @@ export class AuthService {
   async googleLogin() {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(this._Auth, provider).then((res: any) => {
-      if (res?.additionalUserInfo?.isNewUser) {
         setDoc(doc(this._Firestore, 'users', res.user.uid), {
           username: '@' + res.user.displayName,
           email: res.user.email,
@@ -116,7 +115,6 @@ export class AuthService {
           followers: [],
           recentSearch: [],
         });
-      }
     });
 
     this.auth.next(true);
